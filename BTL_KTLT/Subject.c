@@ -19,8 +19,8 @@ void Insert_Hash_Data_Subject (Subject *subject) {
 }
 
 // Đọc dữ liệu từ tệp và thêm vào bảng băm
-void Load_Data_Subject() {
-    FILE *f = fopen("Subject.txt", "r"); // Tạo con trỏ tệp
+void Load_Data_Subject(const char *filename) {
+    FILE *f = fopen(filename, "r"); // Tạo con trỏ tệp
     if (f == NULL) { // Kiểm tra xem tệp có mở thành công không
         printf("Error opening file\n");
         return;
@@ -43,15 +43,15 @@ Subject* Search_Subject (char *subject_id) {
     Subject *temp = Table_Subjects[index]; // Con trỏ bắt đầu từ đầu danh sáchsách
     while (temp != NULL) {
         if (strcmp(&(temp->Subject_Id), subject_id) == 0)  // Tìm thấy môn học
-            break; // dừng vòng lặplặp
+            break; // dừng vòng lặp
         temp = temp->Next; // Chuyển đến môn học tiếp theo
     }
     return temp; // Trả về con trỏ trỏ tới bộ nhớ môn học hoặc NULL nếu không tìm thấy
 }
 
 // Ghi lại dữ liệu vào tệp
-void Write_Subject_Data() {
-    FILE *f = fopen("Subject.txt", "w"); // Tạo con trỏ tệp
+void Write_Subject_Data(const char *filename) {
+    FILE *f = fopen(filename, "w"); // Tạo con trỏ tệp
     if (f == NULL) { // Kiểm tra xem tệp có mở thành công không
         printf("Error opening file\n");
         return;
