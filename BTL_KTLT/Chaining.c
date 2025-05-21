@@ -1,6 +1,9 @@
 #include "Chaining.h"
 
-Chaining* CreatNode(void* Data, void* Key){
+int CompareString (void* str1, void* str2) { // Hàm so sánh chuỗi
+    return strcmp((char*)str1, (char*)str2); // So sánh hai chuỗi
+}
+Chaining* CreatNode(void* Data, void* Key){ // Tham số nhận vào là dữ liệu nút và khóa
     // Tạo một nút mới với dữ liệu và khóa
     Chaining* newNode = (Chaining*)malloc(sizeof(Chaining)); // Cấp phát bộ nhớ cho nút mới
     if (newNode == NULL) { // Kiểm tra xem việc cấp phát có thành công không
@@ -19,10 +22,16 @@ void Insert(Chaining* head, void* Data, void* Key){
         return;
     }
     Chaining* temp = head; // Con trỏ tạm để duyệt danh sách
-    while (temp->Next != NULL) { // Duyệt đến cuối danh sách
-        temp = temp->Next;
+    while (CompareString(temp-> Key, Key) <= 0) { // Duyệt danh sách để tìm vị trí chèn
+        if (temp == NULL) // Nếu đã đến cuối danh sách
+            break; // Thoát vòng lặp
+        temp = temp->Next; // Chuyển đến nút tiếp theo
     }
-    temp->Next = newNode; // Gán nút mới vào cuối danh sách
+    if (temp == NULL) temp = newNode; // Nếu đã đến cuối danh sách, gán nút mới vào cuối
+    else { // Nếu không phải là nút cuối
+        newNode->Next = temp->Next; // Gán con trỏ tiếp theo của nút mới
+        temp->Next = newNode; // Gán con trỏ tiếp theo của nút hiện tại
+    }
 }
 Chaining* Search(Chaining* head, void* Key){
     Chaining* temp = head; // Con trỏ tạm để duyệt danh sách
@@ -38,6 +47,17 @@ void Delete(Chaining* head, void* Key){
     Chaining* temp = Search(head, Key); // Tìm nút cần xóa
     if (temp == NULL) // Nếu không tìm thấy nút cần xóa
         printf("Khong tim thay du lieu de xoa\n");
-    else
+    else{
+        Chaining* prev = head; // Con trỏ tạm để duyệt danh sách
+        if (prev == temp) {
+            head = temp->Next; // Nếu nút cần xóa là đầu danh sách
+            free(temp); // Giải phóng bộ nhớ của nút cần xóa
+            return;
+        }
+        while (prev->Next != temp) { // Duyệt danh sách để tìm nút trước nút cần xóa
+            prev = prev->Next; // Chuyển đến nút tiếp theo
+        }
+        prev->Next = temp->Next; // Gán con trỏ tiếp theo của nút trước nút cần xóa
         free(temp); // Giải phóng bộ nhớ của nút cần xóa
+    }
 }
