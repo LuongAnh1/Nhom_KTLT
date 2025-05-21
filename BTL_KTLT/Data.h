@@ -26,7 +26,7 @@ struct Student{
     int Number_Of_Subjects; // Số môn học
     Grades Grades[MAX_SUBJECTS]; // Điểm từng môn
     float GPA; // Điểm trung bình của kỳ
-    char Rank[10]; // Học lực
+    char Rank[10]; // Học lực (Kém, Yếu, Trung bình, Khá Giỏi, Xuất sắc)
 };
 typedef struct Student Student;
 
