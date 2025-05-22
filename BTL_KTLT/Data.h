@@ -9,7 +9,6 @@ struct Subject{
     char Subject_Id; // Mã môn học
     char Subject_Name[50]; // Tên môn học
     int Credits; // Số tín chỉ
-    struct Subject *Next; // Con trỏ đến môn học tiếp theo
 };
 typedef struct Subject Subject;
 // Điểm
@@ -27,13 +26,19 @@ struct Student{
     int Number_Of_Subjects; // Số môn học
     Grades Grades[MAX_SUBJECTS]; // Điểm từng môn
     float GPA; // Điểm trung bình của kỳ
-    char Rank[10]; // Học lực
-    struct Student *Next; // Con trỏ đến sinh viên tiếp theo
-
+    char Rank[10]; // Học lực (Kém, Yếu, Trung bình, Khá Giỏi, Xuất sắc)
 };
 typedef struct Student Student;
 
-// Khai báo biến toàn cục
-extern Subject *Table_Subjects[MAX_TABLE_SUBJECTS]; // Mảng danh sách môn học
-extern Student *Table_Students[MAX_TABLE_STUDENTS]; // Mảng danh sách sinh viên
+// Tạo chuỗi
+struct Chaining{
+    void *Key; // Khóa
+    void *Data; // Dữ liệu  
+    struct Chaining *Next; // Con trỏ đến phần tử tiếp theo
+};
+typedef struct Chaining Chaining;
+
+// Khai báo biến toàn cục (bảng bămbăm)
+extern Chaining *Table_Subjects[MAX_TABLE_SUBJECTS]; // Mảng danh sách môn học
+extern Chaining *Table_Students[MAX_TABLE_STUDENTS]; // Mảng danh sách sinh viên
 #endif
