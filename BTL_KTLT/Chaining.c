@@ -15,7 +15,7 @@ Chaining* CreatNode(void* Data, void* Key){ // Tham số nhận vào là dữ li
     newNode->Key = Key; // Gán khóa cho nút mới
     return newNode; // Trả về con trỏ tới nút mới
 }
-void Insert(Chaining* head, void* Data, void* Key){
+Chaining* Insert(Chaining* head, void* Data, void* Key){
     Chaining* newNode = CreatNode(Data, Key); // Tạo nút mới
     if (head == NULL) { // Nếu danh sách rỗng, gán nút mới làm đầu danh sách
         head = newNode; // Gán nút mới làm đầu danh sách
@@ -43,7 +43,7 @@ Chaining* Search(Chaining* head, void* Key){
     }
     return NULL; // Trả về NULL nếu không tìm thấy
 }
-void Delete(Chaining* head, void* Key){
+Chaining* Delete(Chaining* head, void* Key){
     Chaining* temp = Search(head, Key); // Tìm nút cần xóa
     if (temp == NULL) // Nếu không tìm thấy nút cần xóa
         printf("Khong tim thay du lieu de xoa\n");

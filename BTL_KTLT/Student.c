@@ -1,21 +1,14 @@
-#include"data.h"
-#include<Hash.h>
-#include<string.h>
-#include<stdlib.h>
-#include<stdio.h>
+#include "Student.h"
+#include "Hash.h"
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include "Chaining.h"
 
 //them sinh vien vao bang bam
 void Insert_Hash_Data_Student (Student *student) {
     int index = hash(&(student->Student_Id)); // Tinh toan chi so bam
-    if (Table_Students[index] == NULL) { // Neu vi tri trong, them vao
-        Table_Students[index] = student;
-    } else {
-        Student *temp = Table_Students[index]; 
-        while (temp->Next != NULL) { // Xu ly xung dot
-            temp = temp->Next;
-        }
-        temp->Next = student; 
-    }
+    Table_Students[index] = Insert(Table_Students[index], student, student->Student_Id); // Them sinh vien vao danh sach lien ket
 }
 
 //doc du lieu va them vao bang bam
@@ -25,14 +18,15 @@ void Load_Data_Student(const char *filename) {
         printf("Error opening file\n");
         return;
     }
-    char line[200]; // Bien tam de doc tung dong
+    char line[200]; // Dung de doc tung dong
     while (fgets(line, sizeof(line), f)) { // Doc tung dong
         Student *student = (Student *)malloc(sizeof(Student));
-        sscanf(line, "%[^,],%[^,],%d/%d/%d,%[^,],%d", student->Student_Id, student->Student_Name, &student->Date.tm_year, &student->Date.tm_mon, &student->Date.tm_mday, student->Class, &student->Number_Of_Subjects);
-        student->Next = NULL;
-
+        sscanf (line, "%[^,],%[^,],%d/%d/%d,%[^,],%d", 
+               student->Student_Id, student->Student_Name, 
+               &student->Date.tm_year, &student->Date.tm_mon, &student->Date.tm_mday,
+               student->Class, &student->Number_Of_Subjects); 
         // Them vao bang bam
-        Insert_Hash_Data_Student(student);
+        Insert_Hash_Data_Student(student); 
     }
     fclose(f); // Dong tep
 }
@@ -40,13 +34,7 @@ void Load_Data_Student(const char *filename) {
 //tim kiem sinh vien trong bang bam
 void search_student(char *student_id){
     int index = hash(student_id); //tinh toan chi so bam
-    Student *temp = Table_Students[index];// con tro bat dau tu dau danh sach
-    while(temp != NULL){
-        if(strcmp(&(temp->Student_Id), student_id) == 0) //tim duoc sinh vien}
-            break; //dung vong lap
-            temp = temp ->Next; //chuyen den sinh vien tiep theo    
-}
- return temp; //tra ve con tro hoac NULL neu khong thay
+ return Search(Table_Students[index], student_id); //tim kiem sinh vien
 }
 
 //ghi lai du lieu vao tep
@@ -56,48 +44,33 @@ void Write_Student_Data(const char *filename) {
         printf("Error opening file\n");
         return;
     }
-    for (int i = 0; i < MAX_TABLE_STUDENTS; i++) { // Duyet qua bang bam
-        Student *temp = Table_Students[i]; // Con tro bat dau tu dau danh sach
-        while (temp != NULL) {
-            fprintf(f, "%s,%s,%d/%d/%d,%s,%d\n", temp->Student_Id, temp->Student_Name, temp->Date.tm_year, temp->Date.tm_mon, temp->Date.tm_mday, temp->Class, temp->Number_Of_Subjects); 
-            temp = temp->Next; // Chuyen den sinh vien tiep theo
+    for (int i = 0; i < MAX_TABLE_STUDENTS; i++) { // Duyet qua tat ca cac chi so bam
+        Chaining *temp = Table_Students[i]; // Lay danh sach lien ket tai chi so bam
+        while (temp != NULL) { // Duyet qua danh sach lien ket
+            Student *student = (Student *)temp->Data; // Lay du lieu sinh vien
+            fprintf(f, "%s,%s,%d/%d/%d,%s,%d\n", 
+                    student->Student_Id, student->Student_Name, 
+                    student->Date.tm_year, student->Date.tm_mon, student->Date.tm_mday,
+                    student->Class, student->Number_Of_Subjects); // Ghi du lieu vao tep
+            temp = temp->Next; // Di chuyen den nut tiep theo
         }
     }
     fclose(f); // Dong tep
 }
 
 //xoa sinh vien khoi danh sach
-void Delete_Student (char *student_id) {
+void Delete_Student(char *student_id) {
     int index = hash(student_id); // Tinh toan chi so bam
-    Student *temp = Table_Students[index]; // Con tro bat dau tu dau danh sach
-    Student *prev = NULL; // Con tro truoc sinh vien hien tai
-    while (temp != NULL) {
-        if (strcmp(&(temp->Student_Id), student_id) == 0) { // Tim thay sinh vien
-            if (prev == NULL) { // Neu sinh vien la phan tu dau tien
-                Table_Students[index] = temp->Next; // Cap nhat vi tri trong bang bam
-            } else {
-                prev->Next = temp->Next; // Cap nhat con tro truoc
-            }
-            free(temp); // Giai phong bo nho
-            return;
-        }
-        prev = temp; // Cap nhat con tro truoc
-        temp = temp->Next; // Chuyen den sinh vien tiep theo
-    }
+    Delete(Table_Students[index], student_id); // Xoa sinh vien khoi danh sach lien ket
 }
 
 //cap nhat thong tin sinh vien
-void Update_Student (char *student_id, Student *new_student) {
-    int index = hash(student_id); // Tinh toan chi so bam
-    Student *temp = Table_Students[index]; // Con tro bat dau tu dau danh sach
-    while (temp != NULL) {
-        if (strcmp(&(temp->Student_Id), student_id) == 0) { // Tim thay sinh vien
-            strcpy(temp->Student_Name, new_student->Student_Name); // Cap nhat ten sinh vien
-            temp->Date = new_student->Date; // Cap nhat ngay sinh
-            strcpy(temp->Class, new_student->Class); // Cap nhat lop
-            temp->Number_Of_Subjects = new_student->Number_Of_Subjects; // Cap nhat so mon hoc
-            return;
-        }
-        temp = temp->Next; // Chuyen den sinh vien tiep theo
+void Update_Student(Student *student) {
+    int index = hash(&(student->Student_Id)); // Tinh toan chi so bam
+    Chaining *node = Search(Table_Students[index], student->Student_Id); // Tim kiem sinh vien
+    if (node != NULL) { // Neu tim thay sinh vien
+        node->Data = student; // Cap nhat thong tin sinh vien
+    } else {
+        printf("Student not found\n"); // Neu khong tim thay sinh vien
     }
 }
