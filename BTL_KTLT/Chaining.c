@@ -19,7 +19,7 @@ Chaining* Insert(Chaining* head, void* Data, void* Key){
     Chaining* newNode = CreatNode(Data, Key); // Tạo nút mới
     if (head == NULL) { // Nếu danh sách rỗng, gán nút mới làm đầu danh sách
         head = newNode; // Gán nút mới làm đầu danh sách
-        return;
+        return head; // Trả về đầu danh sách
     }
     Chaining* temp = head; // Con trỏ tạm để duyệt danh sách
     while (CompareString(temp-> Key, Key) <= 0) { // Duyệt danh sách để tìm vị trí chèn
@@ -32,6 +32,7 @@ Chaining* Insert(Chaining* head, void* Data, void* Key){
         newNode->Next = temp->Next; // Gán con trỏ tiếp theo của nút mới
         temp->Next = newNode; // Gán con trỏ tiếp theo của nút hiện tại
     }
+    return head; // Trả về đầu danh sách đã cập nhật
 }
 Chaining* Search(Chaining* head, void* Key){
     Chaining* temp = head; // Con trỏ tạm để duyệt danh sách
@@ -52,12 +53,13 @@ Chaining* Delete(Chaining* head, void* Key){
         if (prev == temp) {
             head = temp->Next; // Nếu nút cần xóa là đầu danh sách
             free(temp); // Giải phóng bộ nhớ của nút cần xóa
-            return;
+            return head;
         }
         while (prev->Next != temp) { // Duyệt danh sách để tìm nút trước nút cần xóa
             prev = prev->Next; // Chuyển đến nút tiếp theo
         }
         prev->Next = temp->Next; // Gán con trỏ tiếp theo của nút trước nút cần xóa
         free(temp); // Giải phóng bộ nhớ của nút cần xóa
+        return head; // Trả về đầu danh sách đã cập nhật
     }
 }
