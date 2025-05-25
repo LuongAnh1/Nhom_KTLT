@@ -27,8 +27,8 @@ void AvgGrades(Student* student) {
 //hoi khoai
 }
 
-//Nhap diem cho sinh viên
-void InsertGrades(Grades* grades, char student_id) {
+//Nhap diem cho sinh viên (sửa lại)
+void InsertGrades(char Student_id, int Subject_Id, float Score) {
     int subject_count;
     printf("Nhap so mon hoc: ");
     scanf("%d", &subject_count);
