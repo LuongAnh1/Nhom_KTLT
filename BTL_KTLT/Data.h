@@ -14,7 +14,6 @@ typedef struct Subject Subject;
 // Điểm
 struct Grades{
     int Subject_Id; // Mã môn học
-    float Score; // Điểm
 };
 typedef struct Grades Grades;
 // Bảng học sinh
