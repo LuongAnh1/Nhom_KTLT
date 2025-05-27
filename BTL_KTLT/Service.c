@@ -1,9 +1,12 @@
 #include "Service.h"
 #include "Hash.h"
+#include "Chaining.h"
+#include "MergeSort.h"
+#include "Min-Heap.h"
+
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "Chaining.h"
 
 //Quy doi diem
 void ExchangeGrade(Grades* grades) {
@@ -87,5 +90,25 @@ void InsertGrades(char Student_id, int Subject_Id, float Score) {
     }
 }
 
+// Sắp xếp danh sách sinh viên theo điểm trung bình
 
-
+// Hàm in ra kết quả chung
+void Sort(const char *key){
+    // Sắp xếp lại các cuỗi danh sách
+    for(int i = 0; i < MAX_TABLE_STUDENTS; i++)
+        mergeSort(&Table_Students[i], key);
+    // In ra kết quả trộn các danh sách
+    KWayMerge(&Table_Students, MAX_TABLE_STUDENTS, key);
+}
+// Sắp xếp danh sách sinh viên theo điểm trung bình
+void SortStudentByGPA(){
+    Sort("GPA");
+}
+// Sắp xếp danh sách sinh viên theo tên
+void SortStudentByName(){
+    Sort("Student_Name");
+}
+// Sắp xếp danh sách sinh viên theo MSSV
+void SortStudentByID(){
+    Sort("Student_Id");
+}
