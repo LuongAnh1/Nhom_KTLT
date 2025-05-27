@@ -5,7 +5,28 @@
 #include <stdio.h>
 #include "Chaining.h"
 
-//Xep loại sinh viên
+//Quy doi diem
+void ChangeGrade(Grades* grades) {
+    if (grades->Score >= 8.5 && grades->Score <= 10.0) {
+        grades->Score = 4.0;
+    } else if (grades->Score >= 8.0 && grades->Score < 8.5) {
+        grades->Score = 3.5;
+    } else if (grades->Score >= 7.0 && grades->Score < 8.0) {
+        grades->Score = 3.0;
+    } else if (grades->Score >= 6.5 && grades->Score < 7.0) {
+        grades->Score = 2.5;
+    } else if (grades->Score >= 5.5 && grades->Score < 6.5) {
+        grades->Score = 2.0;
+    } else if (grades->Score >= 5.0 && grades->Score < 5.5) {
+        grades->Score = 1.5;
+    } else if (grades->Score >= 4.0 && grades->Score < 5.0) {
+        grades->Score = 1.0;
+    } else {
+        grades->Score = 0.0; 
+    }
+}
+
+//Xep loai sinh vien
 void RankStudent(Student* student) {
     if (student->GPA >= 3.6 && student->GPA <= 4.0) {
         strcpy(student->Rank, "Xuat sac");
@@ -22,26 +43,44 @@ void RankStudent(Student* student) {
     }
 }
 
-//Trung bình điểm của sinh viên
-void AvgGrades(Student* student) {
-//hoi khoai
+//Tim tin chi cua mon hoc qua Subject_Id
+int GetCreditsBySubjectId(int Subject_Id) {
+    for (int i = 0; i < MAX_TABLE_SUBJECTS; i++) {
+        if (Table_Subjects[i] != NULL) {
+            Subject* subject = (Subject*)Table_Subjects[i]->Data;
+            if (subject->Subject_Id == Subject_Id) {
+                return subject->Credits;
+            }
+        }
+    }
+    return -1; // Khong tim thay mon hoc
 }
 
-//Nhap diem cho sinh viên
-void InsertGrades(Grades* grades, char student_id) {
-    int subject_count;
-    printf("Nhap so mon hoc: ");
-    scanf("%d", &subject_count);
-    grades->Number_Of_Subjects = subject_count;
+//Tinh diem trung binh cua sinh vien
+void AvgGrades(Student* student) {
+    float totalScore = 0.0;
+    int totalCredits = 0;
 
-    for (int i = 0; i < subject_count; i++) {
-        printf("Nhap ten mon hoc %d: ", i + 1);
-        scanf("%s", grades->Subject[i].Subject_Name);
-        printf("Nhap diem mon hoc %d: ", i + 1);
-        scanf("%f", &grades->Subject[i].Grade);
+    for (int i = 0; i < student->Number_Of_Subjects; i++) {
+        int credits = GetCreditsBySubjectId(student->Grades[i].Subject_Id);
+        if (credits != -1) {
+            ChangeGrade(&student->Grades[i]); // Quy đổi điểm
+            totalScore += student->Grades[i].Score * credits;
+            totalCredits += credits;
+        }
     }
 
-    //Cap nhat diem trung binh va xep loai
-    AvgGrades((Student*)grades);
-    RankStudent((Student*)grades);
+    if (totalCredits > 0) {
+        student->GPA = totalScore / totalCredits;
+    } else {
+        student->GPA = 0.0; // Không có môn học nào
+    }
 }
+
+
+
+
+
+    
+
+

@@ -15,7 +15,7 @@ void Insert_Hash_Data_Student (Student *student) {
 void Load_Data_Student(const char *filename) {
     FILE *f = fopen(filename, "r"); // Tao con tro tep
     if (f == NULL) { // Kiem tra xem tep co mo thanh cong khong
-        printf("Error opening file\n");
+        printf("Khong mo duoc file %s\n", filename);
         return;
     }
     char line[200]; // Dung de doc tung dong
@@ -32,16 +32,16 @@ void Load_Data_Student(const char *filename) {
 }
 
 //tim kiem sinh vien trong bang bam
-void search_student(char *student_id){
+Chaining* Search_Student(char *student_id){
     int index = hash(student_id); //tinh toan chi so bam
- return Search(Table_Students[index], student_id); //tim kiem sinh vien
+    return Search(Table_Students[index], student_id); //tim kiem sinh vien
 }
 
 //ghi lai du lieu vao tep
 void Write_Student_Data(const char *filename) {
     FILE *f = fopen(filename, "w"); // Tao con tro tep
     if (f == NULL) { // Kiem tra xem tep co mo thanh cong khong
-        printf("Error opening file\n");
+        printf("Khong mo duoc file %s\n", filename);
         return;
     }
     for (int i = 0; i < MAX_TABLE_STUDENTS; i++) { // Duyet qua tat ca cac chi so bam
@@ -61,10 +61,10 @@ void Write_Student_Data(const char *filename) {
 //xoa sinh vien khoi danh sach
 void Delete_Student(char *student_id) {
     int index = hash(student_id); // Tinh toan chi so bam
-    Delete(Table_Students[index], student_id); // Xoa sinh vien khoi danh sach lien ket
+    Table_Students[index] = Delete(Table_Students[index], student_id); // Xoa sinh vien khoi danh sach lien ket
 }
 
-//cap nhat thong tin sinh vien
+//cap nhat thong tin sinh vien (viết thiếuthiếu)
 void Update_Student(Student *student) {
     int index = hash(&(student->Student_Id)); // Tinh toan chi so bam
     Chaining *node = Search(Table_Students[index], student->Student_Id); // Tim kiem sinh vien
