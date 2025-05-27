@@ -6,7 +6,7 @@
 #include "Chaining.h"
 
 //Quy doi diem
-void ChangeGrade(Grades* grades) {
+void ExchangeGrade(Grades* grades) {
     if (grades->Score >= 8.5 && grades->Score <= 10.0) {
         grades->Score = 4.0;
     } else if (grades->Score >= 8.0 && grades->Score < 8.5) {
@@ -60,16 +60,15 @@ int GetCreditsBySubjectId(int Subject_Id) {
 void AvgGrades(Student* student) {
     float totalScore = 0.0;
     int totalCredits = 0;
-
     for (int i = 0; i < student->Number_Of_Subjects; i++) {
-        int credits = GetCreditsBySubjectId(student->Grades[i].Subject_Id);
+        Grades* grades = &student->Grades[i];
+        int credits = GetCreditsBySubjectId(grades->Subject_Id);
         if (credits != -1) {
-            ChangeGrade(&student->Grades[i]); // Quy đổi điểm
-            totalScore += student->Grades[i].Score * credits;
+            ExchangeGrade(grades); // Chuyen doi diem
+            totalScore += grades->Score * credits;
             totalCredits += credits;
         }
     }
-
     if (totalCredits > 0) {
         student->GPA = totalScore / totalCredits;
     } else {
@@ -77,10 +76,4 @@ void AvgGrades(Student* student) {
     }
 }
 
-
-
-
-
-    
-
-
+//Nhap diem cho sinh vien

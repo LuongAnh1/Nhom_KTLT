@@ -71,4 +71,3 @@ void mergeSort(Chaining** headRef, const char* key) {
     mergeSort(&b, key);
     *headRef = sortedMerge(a, b, key); // Cập nhật lại đầu danh sách
 }
-
