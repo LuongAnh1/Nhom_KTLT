@@ -23,7 +23,7 @@ void Load_Data_Student(const char *filename) {
         Student *student = (Student *)malloc(sizeof(Student));
         sscanf (line, "%[^,],%[^,],%d/%d/%d,%[^,],%d", 
                student->Student_Id, student->Student_Name, 
-               &student->Date.tm_year, &student->Date.tm_mon, &student->Date.tm_mday,
+               &student->Date.tm_mday, &student->Date.tm_mon, &student->Date.tm_year,
                student->Class, &student->Number_Of_Subjects); 
         // Them vao bang bam
         Insert_Hash_Data_Student(student); 

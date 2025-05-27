@@ -38,6 +38,13 @@ struct Chaining{
 };
 typedef struct Chaining Chaining;
 
+// Cấu trúc cho phần tử heap
+typedef struct HeapNode{
+    Chaining* node; // Con trỏ tới node hiện tại trong mỗi danh sách
+    // int listIndex;  // Chỉ số của danh sách 
+};
+typedef struct HeapNode HeapNode;
+
 // Khai báo biến toàn cục (bảng bămbăm)
 extern Chaining *Table_Subjects[MAX_TABLE_SUBJECTS]; // Mảng danh sách môn học
 extern Chaining *Table_Students[MAX_TABLE_STUDENTS]; // Mảng danh sách sinh viên
