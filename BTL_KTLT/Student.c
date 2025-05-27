@@ -64,13 +64,21 @@ void Delete_Student(char *student_id) {
     Table_Students[index] = Delete(Table_Students[index], student_id); // Xoa sinh vien khoi danh sach lien ket
 }
 
-//cap nhat thong tin sinh vien (viết thiếuthiếu)
+//cap nhat thong tin sinh vien 
 void Update_Student(Student *student) {
-    int index = hash(&(student->Student_Id)); // Tinh toan chi so bam
-    Chaining *node = Search(Table_Students[index], student->Student_Id); // Tim kiem sinh vien
+    int index = hash(student->Student_Id); // Tinh toan chi so bam
+    Chaining *node = Search(Table_Students[index], student->Student_Id); // Tim kiem sinh vien trong bang bam
     if (node != NULL) { // Neu tim thay sinh vien
-        node->Data = student; // Cap nhat thong tin sinh vien
-    } else {
-        printf("Student not found\n"); // Neu khong tim thay sinh vien
+        Student *existing_student = (Student *)node->Data; // Lay du lieu sinh vien hien tai
+        // Cap nhat thong tin sinh vien
+        strcpy(existing_student->Student_Name, student->Student_Name);
+        existing_student->Date = student->Date;
+        strcpy(existing_student->Class, student->Class);
+        existing_student->Number_Of_Subjects = student->Number_Of_Subjects;
+        for (int i = 0; i < student->Number_Of_Subjects; i++) {
+            existing_student->Grades[i] = student->Grades[i];
+        }
+        existing_student->GPA = student->GPA;
+        strcpy(existing_student->Rank, student->Rank);
     }
 }

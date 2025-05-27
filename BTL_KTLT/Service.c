@@ -60,6 +60,7 @@ int GetCreditsBySubjectId(int Subject_Id) {
 void AvgGrades(Student* student) {
     float totalScore = 0.0;
     int totalCredits = 0;
+
     for (int i = 0; i < student->Number_Of_Subjects; i++) {
         Grades* grades = &student->Grades[i];
         int credits = GetCreditsBySubjectId(grades->Subject_Id);
@@ -69,6 +70,7 @@ void AvgGrades(Student* student) {
             totalCredits += credits;
         }
     }
+
     if (totalCredits > 0) {
         student->GPA = totalScore / totalCredits;
     } else {
@@ -77,3 +79,24 @@ void AvgGrades(Student* student) {
 }
 
 //Nhap diem cho sinh vien
+void InsertGrades(char Student_id, int Subject_Id, float Score) {
+    Chaining* studentNode = Search(Table_Students[hash(Student_id)], Student_id);
+    if (studentNode != NULL) {
+        Student* student = (Student*)studentNode->Data;
+        if (student->Number_Of_Subjects < MAX_SUBJECTS) {
+            Grades* grades = &student->Grades[student->Number_Of_Subjects];
+            grades->Subject_Id = Subject_Id;
+            grades->Score = Score;
+            student->Number_Of_Subjects++;
+            AvgGrades(student); // Tinh diem trung binh sau khi nhap diem
+            RankStudent(student); // Xep loai sinh vien
+        } else {
+            printf("So mon hoc da dat toi da.\n");
+        }
+    } else {
+        printf("Khong tim thay sinh vien voi ma %s.\n", Student_id);
+    }
+}
+
+
+
