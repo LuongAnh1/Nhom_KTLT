@@ -12,6 +12,7 @@ int GetCreditsBySubjectId(int Subject_Id);
 void AvgGrades(Student* Student);
 // Nhập điểm cho sinh viên
 void InsertGrades(char Student_id, int Subject_Id, float Score);
+
 //-------------------------------------------------------------
 // Sắp xếp danh sách sinh viên theo điểm trung bình
 void SortStudentByGPA();

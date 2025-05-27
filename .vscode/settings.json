@@ -1,5 +1,6 @@
 {
     "files.associations": {
+        "min-heap.h": "c"
         "data.h": "c"
     }
 }
