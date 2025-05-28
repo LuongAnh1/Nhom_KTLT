@@ -46,19 +46,6 @@ void RankStudent(Student* student) {
     }
 }
 
-//Tim tin chi cua mon hoc qua Subject_Id
-int GetCreditsBySubjectId(int Subject_Id) {
-    for (int i = 0; i < MAX_TABLE_SUBJECTS; i++) {
-        if (Table_Subjects[i] != NULL) {
-            Subject* subject = (Subject*)Table_Subjects[i]->Data;
-            if (subject->Subject_Id == Subject_Id) {
-                return subject->Credits;
-            }
-        }
-    }
-    return -1; // Khong tim thay mon hoc
-}
-
 //Tinh diem trung binh cua sinh vien
 void AvgGrades(Student* student) {
     float totalScore = 0.0;
@@ -66,33 +53,35 @@ void AvgGrades(Student* student) {
 
     for (int i = 0; i < student->Number_Of_Subjects; i++) {
         Grades* grades = &student->Grades[i];
-        int credits = GetCreditsBySubjectId(grades->Subject_Id);
-        if (credits != -1) {
-            ExchangeGrade(grades); // Chuyen doi diem
-            totalScore += grades->Score * credits;
-            totalCredits += credits;
+        Chaining* subject_node = Search_Subject(grades->Subject_Id);
+        if (subject_node != NULL) {
+            Subject* subject = (Subject*)subject_node->Data;
+            Grades temp = *grades;
+            ExchangeGrade(&temp);
+            totalScore += temp.Score * subject->Credits; 
+            totalCredits += subject->Credits;
         }
     }
 
     if (totalCredits > 0) {
         student->GPA = totalScore / totalCredits;
     } else {
-        student->GPA = 0.0; // Không có môn học nào
+        student->GPA = 0.0;
     }
 }
 
 //Nhap diem cho sinh vien
 void InsertGrades(char Student_id, int Subject_Id, float Score) {
-    Chaining* studentNode = Search(Table_Students[hash(Student_id)], Student_id);
-    if (studentNode != NULL) {
-        Student* student = (Student*)studentNode->Data;
+    Chaining* node = Search_Student(Student_id); 
+    if (node != NULL) {
+        Student* student = (Student*)node->Data; 
         if (student->Number_Of_Subjects < MAX_SUBJECTS) {
             Grades* grades = &student->Grades[student->Number_Of_Subjects];
             grades->Subject_Id = Subject_Id;
             grades->Score = Score;
             student->Number_Of_Subjects++;
-            AvgGrades(student); // Tinh diem trung binh sau khi nhap diem
-            RankStudent(student); // Xep loai sinh vien
+            AvgGrades(student); //Tinh diem trung binh
+            RankStudent(student); //Xep loai sinh vien
         } else {
             printf("So mon hoc da dat toi da.\n");
         }
