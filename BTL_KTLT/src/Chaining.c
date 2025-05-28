@@ -18,29 +18,31 @@ Chaining* CreatNode(void* Data, void* Key){ // Tham số nhận vào là dữ li
     newNode->Key = Key; // Gán khóa cho nút mới
     return newNode; // Trả về con trỏ tới nút mới
 }
-Chaining* Insert(Chaining* head, void* Data, void* Key){
-    Chaining* newNode = CreatNode(Data, Key); // Tạo nút mới
-    if (head == NULL) { // Nếu danh sách rỗng, gán nút mới làm đầu danh sách
-        head = newNode; // Gán nút mới làm đầu danh sách
-        return head; // Trả về đầu danh sách
+Chaining* Insert(Chaining* head, void* Data, void* Key) {
+    Chaining* newNode = CreatNode(Data, Key);
+    if (!newNode) return head;
+
+    // Nếu danh sách rỗng hoặc node mới cần chèn lên đầu
+    if (head == NULL || CompareString(Key, head->Key) < 0) {
+        newNode->Next = head;
+        return newNode;
     }
-    Chaining* temp = head; // Con trỏ tạm để duyệt danh sách
-    while (CompareString(temp-> Key, Key) <= 0) { // Duyệt danh sách để tìm vị trí chèn
-        if (temp == NULL) // Nếu đã đến cuối danh sách
-            break; // Thoát vòng lặp
-        temp = temp->Next; // Chuyển đến nút tiếp theo
+
+    Chaining* cur = head;
+    // Tìm vị trí chèn
+    while (cur->Next != NULL && CompareString(Key, cur->Next->Key) >= 0) {
+        cur = cur->Next;
     }
-    if (temp == NULL) temp = newNode; // Nếu đã đến cuối danh sách, gán nút mới vào cuối
-    else { // Nếu không phải là nút cuối
-        newNode->Next = temp->Next; // Gán con trỏ tiếp theo của nút mới
-        temp->Next = newNode; // Gán con trỏ tiếp theo của nút hiện tại
-    }
-    return head; // Trả về đầu danh sách đã cập nhật
+
+    newNode->Next = cur->Next;
+    cur->Next = newNode;
+    return head;
 }
+
 Chaining* Search(Chaining* head, void* Key){
     Chaining* temp = head; // Con trỏ tạm để duyệt danh sách
     while (temp != NULL) { // Duyệt danh sách
-        if (temp->Key == Key) { // Nếu tìm thấy dữ liệu
+        if (CompareString(temp->Key, Key) == 0) { // Nếu tìm thấy dữ liệu
             return temp; // Trả về con trỏ tới nút tìm thấy
         }
         temp = temp->Next; // Chuyển đến nút tiếp theo
@@ -49,8 +51,11 @@ Chaining* Search(Chaining* head, void* Key){
 }
 Chaining* Delete(Chaining* head, void* Key){
     Chaining* temp = Search(head, Key); // Tìm nút cần xóa
-    if (temp == NULL) // Nếu không tìm thấy nút cần xóa
+    if (temp == NULL){
+        // Nếu không tìm thấy nút cần xóa
         printf("Khong tim thay du lieu de xoa\n");
+        return NULL;
+    } 
     else{
         Chaining* prev = head; // Con trỏ tạm để duyệt danh sách
         if (prev == temp) {
