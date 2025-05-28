@@ -19,7 +19,10 @@ void Load_Data_Subject(const char *filename) {
         return;
     }
     char line[200]; // Biến tạm để đọc từng dòng
-    while (fgets(line, sizeof(line), f)) { // Đọc từng dòng
+    while (fgets(line, sizeof(line), f) != NULL ) { // Đọc từng dòng
+        // Nếu dòng chỉ chứa ký tự newline (dòng trống)
+        if (strcmp(line, "\n") == 0)
+            continue;
         line[strcspn(line, "\n")] = '\0'; // Xóa ký tự xuống dòng nếu có
         Subject *subject = (Subject *)malloc(sizeof(Subject));
         sscanf(line, "%[^,],%[^,],%d", subject->Subject_Id, subject->Subject_Name, &subject->Credits);

@@ -10,6 +10,8 @@ void Load_Data_Grades(const char *filename);
 Chaining* Search_Student(char *student_id);
 //ghi lai du lieu vao tep
 void Write_Student_Data(const char *filename);
+// Ghi laị dữ liệu điểm số vào tệp
+void Write_Grades_Data(const char *filename, Student* student);
 //xoa sinh vien khoi danh sach
 void Delete_Student(char *student_id);
 //cap nhat thong tin sinh vien

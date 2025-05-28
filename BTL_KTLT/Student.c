@@ -19,8 +19,11 @@ void Load_Data_Student(const char *filename) {
         return;
     }
     char line[200]; // Dung de doc tung dong
-    while (fgets(line, sizeof(line), f)) { // Doc tung dong
-        line[strcspn(line, "\n")] = '\0'; // Xóa ký tự xuống dòng nếu có
+    line[strcspn(line, "\n")] = '\0'; // Xóa ký tự xuống dòng nếu có
+    while (fgets(line, sizeof(line), f) != NULL ) { // Doc tung dong
+        // Nếu dòng chỉ chứa ký tự newline (dòng trống)
+        if (strcmp(line, "\n") == 0)
+            continue;
         Student *student = (Student *)malloc(sizeof(Student));
         sscanf (line, "%[^,],%[^,],%d/%d/%d,%[^,],%d", 
                student->Student_Id, student->Student_Name, 
@@ -41,7 +44,10 @@ void Load_Data_Grades(const char *filename){
         return;
     }
     char line[200]; // Dung de doc tung dong
-    while (fgets(line, sizeof(line), f)) { // Doc tung dong
+    while (fgets(line, sizeof(line), f) != NULL ) { // Doc tung dong
+        // Nếu dòng chỉ chứa ký tự newline (dòng trống)
+        if (strcmp(line, "\n") == 0)
+            continue;
         line[strcspn(line, "\n")] = '\0'; // Xóa ký tự xuống dòng nếu có
         char student_id[10], subject_id[10];
         float score;
@@ -81,7 +87,7 @@ void Write_Student_Data(const char *filename) {
     fclose(f); // Dong tep
 }
 
-// Ghi laị dữ liêuj điểm số vào tệp
+// Ghi laị dữ liệu điểm số vào tệp
 void Write_Grades_Data(const char *filename, Student* student){
     FILE *f = fopen(filename, "w"); // Tao con tro tep
     for (int i = 0; i < student->Number_Of_Subjects; i++)
