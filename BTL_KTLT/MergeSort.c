@@ -1,5 +1,6 @@
 #include "MergeSort.h"
 #include <stdlib.h>
+#include <string.h>
 
 // Hàm lấy giá trị của key và so sánh 2 nút
 int compareStudent(Student* a, Student* b, const char* key) {

@@ -6,14 +6,14 @@
 #define MAX_SUBJECTS 20 // Số lượng môn mà 1 kỳ sinh viên có thể học tối đa
 // Bảng danh sách môn học
 struct Subject{
-    char Subject_Id; // Mã môn học
+    char Subject_Id[10]; // Mã môn học
     char Subject_Name[50]; // Tên môn học
     int Credits; // Số tín chỉ
 };
 typedef struct Subject Subject;
 // Điểm
 struct Grades{
-    char Subject_Id; // Mã môn học
+    char Subject_Id[10]; // Mã môn học
     float Score; // Điểm gốc (0-10)
 };
 typedef struct Grades Grades;
@@ -39,11 +39,11 @@ struct Chaining{
 typedef struct Chaining Chaining;
 
 // Cấu trúc cho phần tử heap
-typedef struct HeapNode{
+typedef struct HeapNode {
     Chaining* node; // Con trỏ tới node hiện tại trong mỗi danh sách
-    // int listIndex;  // Chỉ số của danh sách 
-};
-typedef struct HeapNode HeapNode;
+    int listIndex;  // Chỉ số của danh sách 
+} HeapNode;
+
 
 // Khai báo biến toàn cục (bảng bămbăm)
 extern Chaining *Table_Subjects[MAX_TABLE_SUBJECTS]; // Mảng danh sách môn học

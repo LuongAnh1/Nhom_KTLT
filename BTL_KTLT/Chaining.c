@@ -1,4 +1,7 @@
 #include "Chaining.h"
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 int CompareString (void* str1, void* str2) { // Hàm so sánh chuỗi
     return strcmp((char*)str1, (char*)str2); // So sánh hai chuỗi

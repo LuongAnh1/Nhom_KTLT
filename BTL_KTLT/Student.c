@@ -7,7 +7,7 @@
 
 //them sinh vien vao bang bam
 void Insert_Hash_Data_Student (Student *student) {
-    int index = hash(&(student->Student_Id)); // Tinh toan chi so bam
+    int index = hash(student->Student_Id); // Tinh toan chi so bam
     Table_Students[index] = Insert(Table_Students[index], student, student->Student_Id); // Them sinh vien vao danh sach lien ket
 }
 

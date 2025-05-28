@@ -7,7 +7,7 @@
 
 // Thêm môn học vào bảng băm
 void Insert_Hash_Data_Subject (Subject *subject) {
-    int index = hash(&(subject->Subject_Id)); // Tính toán chỉ số băm
+    int index = hash(subject->Subject_Id); // Tính toán chỉ số băm
     Table_Subjects[index] = Insert(Table_Subjects[index], subject, subject->Subject_Id); // Thêm môn học vào danh sách liên kết
 }
 
