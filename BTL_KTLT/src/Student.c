@@ -80,7 +80,7 @@ void Write_Student_Data(const char *filename) {
                     student->Student_Id, student->Student_Name, 
                     student->Date.tm_year, student->Date.tm_mon, student->Date.tm_mday,
                     student->Class, student->Number_Of_Subjects); // Ghi du lieu vao tep
-            Write_Grades_Data("Subject.csv", student);
+            Write_Grades_Data("data/Subject.csv", student);
             temp = temp->Next; // Di chuyen den nut tiep theo
         }
     }
