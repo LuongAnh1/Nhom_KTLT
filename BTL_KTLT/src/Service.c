@@ -3,7 +3,8 @@
 #include "Chaining.h"
 #include "MergeSort.h"
 #include "Min-Heap.h"
-
+#include "Subject.h"
+#include "Student.h"
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -71,13 +72,13 @@ void AvgGrades(Student* student) {
 }
 
 //Nhap diem cho sinh vien
-void InsertGrades(char Student_id, int Subject_Id, float Score) {
+void InsertGrades(char* Student_id, char* Subject_Id, float Score) {
     Chaining* node = Search_Student(Student_id); 
     if (node != NULL) {
         Student* student = (Student*)node->Data; 
         if (student->Number_Of_Subjects < MAX_SUBJECTS) {
             Grades* grades = &student->Grades[student->Number_Of_Subjects];
-            grades->Subject_Id = Subject_Id;
+            strcmp(grades->Subject_Id, Subject_Id);
             grades->Score = Score;
             student->Number_Of_Subjects++;
             AvgGrades(student); //Tinh diem trung binh
@@ -98,7 +99,7 @@ void Sort(const char *key){
     for(int i = 0; i < MAX_TABLE_STUDENTS; i++)
         mergeSort(&Table_Students[i], key);
     // In ra kết quả trộn các danh sách
-    KWayMerge(&Table_Students, MAX_TABLE_STUDENTS, key);
+    KWayMerge(Table_Students, MAX_TABLE_STUDENTS, key);
 }
 // Sắp xếp danh sách sinh viên theo điểm trung bình
 void SortStudentByGPA(){

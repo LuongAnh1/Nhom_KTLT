@@ -9,7 +9,7 @@ void RankStudent(Student* Student);
 // Trung bình điểm của sinh viên (được gọi trong hàm InsertGrades)
 void AvgGrades(Student* Student);
 // Nhập điểm cho sinh viên
-void InsertGrades(char Student_id, int Subject_Id, float Score);
+void InsertGrades(char* Student_id, char* Subject_Id, float Score);
 
 //-------------------------------------------------------------
 // Sắp xếp danh sách sinh viên theo điểm trung bình

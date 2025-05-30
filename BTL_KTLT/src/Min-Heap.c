@@ -2,6 +2,7 @@
 #include "MergeSort.h"
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 // So sánh hai node 
 int Compare(Chaining* a, Chaining* b, const char *key) {
@@ -73,7 +74,7 @@ void printStudent(Student *student){
 // Hàm chính
 // lists = *Table_Students[MAX_TABLE_STUDENTS];
 void KWayMerge(Chaining** lists, int k, const char *key) {
-    if (k == 0) return NULL; // Kiểm tra số phần tử cần sắp xếp
+    if (k == 0) return; // Kiểm tra số phần tử cần sắp xếp
     HeapNode* heap = (HeapNode*)malloc(sizeof(HeapNode) * k); 
     // Cấp bộ nhớ k phần tử liên tiếp cho mảng lưu các phần tử Min-Heap 
     int heapSize = 0; // Khơi tạo kích cỡ của mảng Heap = 0
