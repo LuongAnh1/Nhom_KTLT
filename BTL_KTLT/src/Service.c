@@ -11,7 +11,7 @@
 #include <stdio.h>
 
 //Quy doi diem
-void ExchangeGrade(Grades* grades) {
+void ExchageGrade(Grades* grades) {
     if (grades->Score >= 8.5 && grades->Score <= 10.0) {
         grades->Score = 4.0;
     } else if (grades->Score >= 8.0 && grades->Score < 8.5) {
