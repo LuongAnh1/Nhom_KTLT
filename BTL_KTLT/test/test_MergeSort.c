@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "Chaining.h"
 #include "MergeSort.h"
 
@@ -41,7 +42,7 @@ int test_mergeSort() {
 }
 
 void print_result(const char* func, int result) {
-    printf("Hàm %s trong MergeSort.c: %s\n", func, result ? "ĐÚNG" : "SAI");
+    printf("Ham %s trong MergeSort.c: %s\n", func, result ? "DUNG" : "SAI");
 }
 
 int main() {
@@ -49,5 +50,6 @@ int main() {
     print_result("splitList", test_splitList());
     print_result("sortedMerge", test_sortedMerge());
     print_result("mergeSort", test_mergeSort());
+    system("PAUSE");
     return 0;
 }

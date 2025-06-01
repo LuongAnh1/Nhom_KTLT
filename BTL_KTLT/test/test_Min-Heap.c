@@ -82,7 +82,7 @@ int test_printStudent() {
 }
 
 void print_result(const char* func, int result) {
-    printf("Hàm %s trong Min-Heap.c: %s\n", func, result ? "ĐÚNG" : "SAI");
+    printf("Ham %s trong Min-Heap.c: %s\n", func, result ? "DUNG" : "SAI");
 }
 
 int main() {
@@ -91,5 +91,6 @@ int main() {
     print_result("ExtractMin", test_ExtractMin());
     print_result("InsertHeap", test_InsertHeap());
     print_result("printStudent", test_printStudent());
+    system("PAUSE");
     return 0;
 }
