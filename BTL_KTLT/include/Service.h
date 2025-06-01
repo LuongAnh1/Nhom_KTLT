@@ -3,7 +3,7 @@
 #include "Data.h"
 //Cường
 //Quy đổi điểm của sinh viên
-void ExchageGrade(Grades* grades);
+void ExchangeGrade(Grades* grades);
 // Xếp loại sinh viên
 void RankStudent(Student* Student);
 // Trung bình điểm của sinh viên (được gọi trong hàm InsertGrades)
