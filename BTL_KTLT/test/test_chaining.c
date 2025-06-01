@@ -24,12 +24,14 @@ int main() {
     char* key3 = strdup("binh");
     char* data3 = strdup("data3");
 
+    printf("\n=== TEST INSERT ===\n");
     printf("Input: Them vao 'hoa', 'an', 'binh' vao danh sach\n");
     head = Insert(head, data1, key1);
     head = Insert(head, data2, key2);
     head = Insert(head, data3, key3);
     InDanhSach(head);
 
+    printf("\n=== TEST TIM KIEM ===\n");
     printf("Input: Tim kiem khoa 'an'\n");
     Chaining* found = Search(head, "an");
     if (found) {
@@ -38,6 +40,7 @@ int main() {
         printf("Output: Khong tim thay khoa 'an'\n");
     }
 
+    printf("\n=== TEST XOA ===\n");
     printf("Input: Xoa khoa 'hoa'\n");
     head = Delete(head, "hoa");
     InDanhSach(head);
