@@ -1,18 +1,20 @@
-#include "Hash.h"
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include "Hash.h"
 
+int main() {
+    char *key1 = "hoa";
+    char *key2 = "an";
+    char *key3 = "binh";
+    char *key4 = "nam";
 
-void Test_Hash(){
-    char *a="abcd", *b = "abc";
-    unsigned int k1 = hash(a), k2 = hash(b);
-    if (k1 > 0 && k2 > 0 && k1 != k2)
-        printf("Ham hash cua Hash.h dung\n");
-    else
-        printf("Ham hash cua Hash.h sai\n");
-}
-int main(){
-    Test_Hash();
+    printf("Input: Tinh gia tri bam cho cac khoa: 'hoa', 'an', 'binh', 'nam'\n");
+
+    printf("Output: Gia tri bam cua '%s' la: %u\n", key1, hash(key1));
+    printf("Output: Gia tri bam cua '%s' la: %u\n", key2, hash(key2));
+    printf("Output: Gia tri bam cua '%s' la: %u\n", key3, hash(key3));
+    printf("Output: Gia tri bam cua '%s' la: %u\n", key4, hash(key4));
+
     system("PAUSE");
     return 0;
 }

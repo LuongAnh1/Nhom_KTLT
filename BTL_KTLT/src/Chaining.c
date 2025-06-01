@@ -54,7 +54,7 @@ Chaining* Delete(Chaining* head, void* Key){
     if (temp == NULL){
         // Nếu không tìm thấy nút cần xóa
         printf("Khong tim thay du lieu de xoa\n");
-        return NULL;
+        return head;
     } 
     else{
         Chaining* prev = head; // Con trỏ tạm để duyệt danh sách
