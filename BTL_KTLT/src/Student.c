@@ -25,10 +25,12 @@ void Load_Data_Student(const char *filename) {
         if (strcmp(line, "\n") == 0)
             continue;
         Student *student = (Student *)malloc(sizeof(Student));
-        sscanf (line, "%[^,],%[^,],%d/%d/%d,%[^,],%d", 
+        sscanf (line, "%[^,],%[^,],%d/%d/%d,%[^,],%d,%[^,]", 
                student->Student_Id, student->Student_Name, 
                &student->Date.tm_mday, &student->Date.tm_mon, &student->Date.tm_year,
                student->Class, &student->GPA, student->Rank); 
+        student->Date.tm_mon --;
+        student->Date.tm_year = student->Date.tm_year - 1900;
         student->Number_Of_Subjects = 0;
         // Them vao bang bam
         Insert_Hash_Data_Student(student); 
@@ -78,7 +80,7 @@ void Write_Student_Data(const char *filename) {
             Student *student = (Student *)temp->Data; // Lay du lieu sinh vien
             fprintf(f, "%s,%s,%d/%d/%d,%s,%d\n", 
                     student->Student_Id, student->Student_Name, 
-                    student->Date.tm_year, student->Date.tm_mon, student->Date.tm_mday,
+                    student->Date.tm_mday, student->Date.tm_mon + 1, student->Date.tm_year + 1900,
                     student->Class, student->Number_Of_Subjects); // Ghi du lieu vao tep
             Write_Grades_Data("data/Subject.csv", student);
             temp = temp->Next; // Di chuyen den nut tiep theo

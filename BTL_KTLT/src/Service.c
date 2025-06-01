@@ -79,7 +79,7 @@ void InsertGrades(char* Student_id, char* Subject_Id, float Score) {
         Student* student = (Student*)node->Data; 
         if (student->Number_Of_Subjects < MAX_SUBJECTS) {
             Grades* grades = &student->Grades[student->Number_Of_Subjects];
-            strcmp(grades->Subject_Id, Subject_Id);
+            strcpy(grades->Subject_Id, Subject_Id);
             grades->Score = Score;
             student->Number_Of_Subjects++;
             AvgGrades(student); //Tinh diem trung binh
