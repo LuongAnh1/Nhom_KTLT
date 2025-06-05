@@ -1,9 +1,9 @@
 #ifndef SERVICE_H
 #define SERVICE_H
 #include "Data.h"
-//Cường
+
 //Quy đổi điểm của sinh viên
-void ExchageGrade(Grades* grades);
+void ExchangeGrade(Grades* grades);
 // Xếp loại sinh viên
 void RankStudent(Student* Student);
 // Trung bình điểm của sinh viên (được gọi trong hàm InsertGrades)
@@ -18,5 +18,6 @@ void SortStudentByGPA();
 void SortStudentByName();
 // Sắp xếp danh sách sinh viên theo MSSV
 void SortStudentByID();
-
+// Menu
+void Menu();
 #endif
