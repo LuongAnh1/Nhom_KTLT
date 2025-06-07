@@ -19,13 +19,13 @@ void Load_Data_Student(const char *filename) {
         return;
     }
     char line[200]; // Dung de doc tung dong
-    line[strcspn(line, "\n")] = '\0'; // Xóa ký tự xuống dòng nếu có
     while (fgets(line, sizeof(line), f) != NULL ) { // Doc tung dong
         // Nếu dòng chỉ chứa ký tự newline (dòng trống)
         if (strcmp(line, "\n") == 0)
             continue;
+        line[strcspn(line, "\n")] = '\0'; // Xóa ký tự xuống dòng nếu có
         Student *student = (Student *)malloc(sizeof(Student));
-        sscanf (line, "%[^,],%[^,],%d/%d/%d,%[^,],%d,%[^,]", 
+        sscanf (line, "%[^,],%[^,],%d/%d/%d,%[^,],%f,%[^,]", 
                student->Student_Id, student->Student_Name, 
                &student->Date.tm_mday, &student->Date.tm_mon, &student->Date.tm_year,
                student->Class, &student->GPA, student->Rank); 

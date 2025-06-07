@@ -36,7 +36,7 @@ void MinHeapify(HeapNode heap[], int size, int i, const char *key) {
     }
 }
 
-// Hamf lấy ra phần tử nhỏ nhất của Min-Heap
+// Ham lấy ra phần tử nhỏ nhất của Min-Heap
 HeapNode ExtractMin(HeapNode heap[], int* size, const char *key) {
     HeapNode min = heap[0];
     heap[0] = heap[*size - 1]; // Đưa phần tử cuối lên đầu 
@@ -60,12 +60,12 @@ void InsertHeap(HeapNode heap[], int* size, HeapNode value,const char *key) {
 
 // Hàm in ra thông tin sinh viên
 void printStudent(Student *student){
-    printf("%s|%s|%d/%d/%d|%s|%f|%s",
+    printf("%s|%s|%d/%d/%d|%s|%f|%s\n",
             (*student).Student_Id,
             (*student).Student_Name,
             (*student).Date.tm_mday,
-            (*student).Date.tm_mon,
-            (*student).Date.tm_year,
+            (*student).Date.tm_mon + 1,
+            (*student).Date.tm_year + 1900,
             (*student).Class,
             (*student).GPA,
             (*student).Rank);

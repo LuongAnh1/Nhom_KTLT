@@ -185,13 +185,13 @@ void In_Danh_Sach(){
 
         switch (choice) {
             case 1:
-                SortStudentByGPA();
+                SortStudentByID();
                 break;
             case 2:
                 SortStudentByName();
                 break;
             case 3:
-                SortStudentByID();
+                SortStudentByGPA();
                 break;
             case 0:
                 return;

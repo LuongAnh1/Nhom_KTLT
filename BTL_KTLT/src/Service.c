@@ -98,6 +98,7 @@ void InsertGrades(char* Student_id, char* Subject_Id, float Score) {
 void Sort(const char *key){
     // Sắp xếp lại các cuỗi danh sách
     for(int i = 0; i < MAX_TABLE_STUDENTS; i++)
+    if(Table_Students[i])
         mergeSort(&Table_Students[i], key);
     // In ra kết quả trộn các danh sách
     KWayMerge(Table_Students, MAX_TABLE_STUDENTS, key);

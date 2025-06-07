@@ -14,7 +14,7 @@ typedef struct Subject Subject;
 // Điểm
 struct Grades{
     char Subject_Id[11]; // Mã môn học
-    float Score; // Điểm gốc (0-10)
+    float Score; // Nhập vào là điểm gốc (0-10)
 };
 typedef struct Grades Grades;
 // Bảng học sinh

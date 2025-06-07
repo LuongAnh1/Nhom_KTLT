@@ -1,17 +1,21 @@
 #include "MergeSort.h"
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 // Hàm lấy giá trị của key và so sánh 2 nút
 int compareStudent(Student* a, Student* b, const char* key) {
     if (strcmp(key, "Student_Id") == 0) {
-        return strcmp(a->Student_Id, b->Student_Id);
+        return atoi(a->Student_Id) - atoi(b->Student_Id);
     } else if (strcmp(key, "Student_Name") == 0) {
-        return strcmp(a->Student_Name, b->Student_Name);
+        if(strcmp(a->Student_Name, b->Student_Name) != 0)
+            return strcmp(a->Student_Name, b->Student_Name);
+        else
+            return atoi(a->Student_Id) - atoi(b->Student_Id);
     } else if (strcmp(key, "GPA") == 0) {
         if (a->GPA < b->GPA) return -1;
         if (a->GPA > b->GPA) return 1;
-        return 0;
+        else return atoi(a->Student_Id) - atoi(b->Student_Id);
     }
     return 0; // hoặc lỗi
 }
