@@ -221,8 +221,11 @@ void Them_Sinh_Vien(char* student_id){
         }
 
         printf("Nhap Ho va Ten sinh vien: ");
-        fgets(student->Student_Name, sizeof(student->Student_Name), stdin);
-        student->Student_Name[strcspn(student->Student_Name, "\n")] = '\0';
+        char name[300];
+        fgets(name, sizeof(name), stdin);
+        name[strcspn(name, "\n")] = '\0';
+        trim(name);
+        strcpy(student->Student_Name,name);
 
         printf("Nhap ngay thang nam sinh (dd/mm/yyyy): ");
         if (scanf("%d/%d/%d", &student->Date.tm_mday, &student->Date.tm_mon, &student->Date.tm_year) != 3) {

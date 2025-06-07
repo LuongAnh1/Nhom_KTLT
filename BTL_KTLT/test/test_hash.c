@@ -1,20 +1,41 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "Hash.h"
+#include <string.h>
+#include "Hash.h"  // Gồm các hàm: hash, tolowerCase, trim
 
 int main() {
-    char *key1 = "hoa";
-    char *key2 = "an";
-    char *key3 = "binh";
-    char *key4 = "nam";
+    char test1[] = "   nguyen    van     A    ";
+    char test2[] = " LE   THI   B   ";
+    char test3[] = "  tran QUOC   DAt ";
+    char temp[100];
 
-    printf("Input: Tinh gia tri bam cho cac khoa: 'hoa', 'an', 'binh', 'nam'\n");
+    // Test ham trim (chuan hoa ten)
+    printf("=== Test ham trim (chuan hoa ten) ===\n");
 
-    printf("Output: Gia tri bam cua '%s' la: %u\n", key1, hash(key1));
-    printf("Output: Gia tri bam cua '%s' la: %u\n", key2, hash(key2));
-    printf("Output: Gia tri bam cua '%s' la: %u\n", key3, hash(key3));
-    printf("Output: Gia tri bam cua '%s' la: %u\n", key4, hash(key4));
+    strcpy(temp, test1);
+    trim(temp);
+    printf("Ten goc: '%s'\n", test1);
+    printf("Sau khi chuan hoa: '%s'\n\n", temp);
 
+    strcpy(temp, test2);
+    trim(temp);
+    printf("Ten goc: '%s'\n", test2);
+    printf("Sau khi chuan hoa: '%s'\n\n", temp);
+
+    strcpy(temp, test3);
+    trim(temp);
+    printf("Ten goc: '%s'\n", test3);
+    printf("Sau khi chuan hoa: '%s'\n\n", temp);
+
+    // Test ham hash
+    printf("=== Test ham hash ===\n");
+    printf("Hash('%s') = %u\n", temp, hash(temp));
+
+    strcpy(temp, "Nguyen Van B");
+    printf("Hash('%s') = %u\n", temp, hash(temp));
+
+    strcpy(temp, "Nguyen Van C");
+    printf("Hash('%s') = %u\n", temp, hash(temp));
     system("PAUSE");
     return 0;
 }
