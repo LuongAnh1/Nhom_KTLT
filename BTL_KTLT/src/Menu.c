@@ -19,11 +19,13 @@ void ClearScreen(){
 void Nhap_Diem (char* student_id,char* subject_id, float* score);
 void Tim_Sinh_Vien (char* student_id);
 void In_Danh_Sach();
+void Them_Sinh_Vien(char* student_id);
+void Xoa_Sinh_Vien(char* student_id);
 
 void Menu() {
     int choice;
-    char subject_id[10]; // Mã môn học
-    char student_id[10]; // Mã sinh viên
+    char subject_id[11]; // Mã môn học
+    char student_id[11]; // Mã sinh viên
     float score; // Điểm gốc (0-10)
     do {
         ClearScreen();
@@ -31,6 +33,8 @@ void Menu() {
         printf("1. Nhap diem cho sinh vien\n");
         printf("2. Tim kiem sinh vien\n");
         printf("3. In danh sach sinh vien\n");
+        printf("4. Them sinh vien\n");
+        printf("5. Xoa sinh vien\n");
         printf("0. Thoat\n");
         printf("Lua chon cua ban: ");
         scanf("%d", &choice);
@@ -45,6 +49,12 @@ void Menu() {
                 break;
             case 3:
                 In_Danh_Sach();
+                break;
+            case 4:
+                Them_Sinh_Vien(subject_id);
+                break;
+            case 5:
+                Xoa_Sinh_Vien(subject_id);
                 break;
             case 0:
                 printf("Thoat chuong trinh.\n");
@@ -63,7 +73,8 @@ void Nhap_Diem(char* student_id,char* subject_id, float* score){
     
     // Nhập MSSV 
     printf("Nhap MSSV: ");
-    scanf("%s", student_id);
+    fgets(student_id, 11, stdin);
+    student_id[strcspn(student_id, "\n")] = '\0';
     Chaining* chaining = Search_Student(student_id);
     
     if (chaining == NULL)
@@ -76,7 +87,8 @@ void Nhap_Diem(char* student_id,char* subject_id, float* score){
     Student* student = Search_Student(student_id)->Data;
     // Nhập Mã Học Phần
     printf("Nhap Ma Hoc Phan: ");
-    scanf("%s", subject_id);
+    fgets(subject_id, 11, stdin);
+    subject_id[strcspn(subject_id, "\n")] = '\0';
     Subject* subject = Search_Subject(subject_id)->Data;
     if (subject == NULL)
     {
@@ -129,7 +141,8 @@ void Tim_Sinh_Vien (char* student_id){
         
         // Nhập MSSV 
         printf("Nhap MSSV: ");
-        scanf("%s", student_id);
+        fgets(student_id, 11, stdin);
+        student_id[strcspn(student_id, "\n")] = '\0';
         Chaining* chaining = Search_Student(student_id); 
         if (chaining == NULL)
             printf("Ma sinh vien khong ton tai.\n");
@@ -181,11 +194,80 @@ void In_Danh_Sach(){
                 SortStudentByID();
                 break;
             case 0:
-                printf("Thoat chuong trinh.\n");
-                break;
+                return;
             default:
                 printf("Lua chon khong hop le. Vui long thu lai!\n");
         }
         system("PAUSE");
     } while (choice != 0);
+}
+void Them_Sinh_Vien(char* student_id){
+    ClearScreen();
+    printf("=========== THEM SINH VIEN ===========\n");
+    
+    // Nhập MSSV 
+    printf("Nhap MSSV: ");
+    fgets(student_id, 11, stdin);
+    student_id[strcspn(student_id, "\n")] = '\0';
+    Chaining* chaining = Search_Student(student_id); 
+    if (chaining != NULL)
+        printf("Ma sinh vien da ton tai.\n");
+    else{
+        Student* student = (Student*)malloc(sizeof(Student));
+        if (student == NULL) {
+            printf("Khong du bo nho de cap phat!\n");
+            system("PAUSE");
+            return;
+        }
+
+        printf("Nhap Ho va Ten sinh vien: ");
+        fgets(student->Student_Name, sizeof(student->Student_Name), stdin);
+        student->Student_Name[strcspn(student->Student_Name, "\n")] = '\0';
+
+        printf("Nhap ngay thang nam sinh (dd/mm/yyyy): ");
+        if (scanf("%d/%d/%d", &student->Date.tm_mday, &student->Date.tm_mon, &student->Date.tm_year) != 3) {
+            printf("Lỗi: Định dạng không hợp lệ! Vui lòng nhập theo dd/mm/yyyy.\n");
+            system("PAUSE");
+            return; // Kết thúc chương trình với mã lỗi
+        }
+        while (getchar() != '\n');
+        student->Date.tm_mon = student->Date.tm_mon - 1;
+        student->Date.tm_year = student->Date.tm_year - 1900;
+
+        printf("Nhap Ma lop Sinh vien: ");
+        fgets(student->Class, sizeof(student->Class), stdin);
+        student->Class[strcspn(student->Class, "\n")] = '\0';
+
+        strcpy(student->Student_Id, student_id);
+        student->GPA = 0.0;
+        student->Number_Of_Subjects=0;
+        strcpy(student->Rank, "Kem");
+        
+        Insert_Hash_Data_Student(student);
+        if(Search_Student(student_id) != NULL)
+            printf("Them sinh vien thanh cong\n");
+        else
+            printf("Loi, khong them duoc sinh vien\n");
+    }
+    system("PAUSE");
+}
+void Xoa_Sinh_Vien(char* student_id){
+        ClearScreen();
+    printf("=========== XOA SINH VIEN ===========\n");
+    
+    // Nhập MSSV 
+    printf("Nhap MSSV: ");
+    fgets(student_id, 11, stdin);
+    student_id[strcspn(student_id, "\n")] = '\0';
+    Chaining* chaining = Search_Student(student_id); 
+    if (chaining == NULL)
+        printf("Ma sinh vien khong ton tai.\n");
+    else{
+        Delete_Student(student_id);
+        if(Search_Student(student_id) == NULL)
+            printf("Xoa sinh vien thanh cong\n");
+        else
+            printf("Loi, khong the xoa sinh vien\n");
+    }
+    system("PAUSE");
 }

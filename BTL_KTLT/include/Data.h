@@ -6,20 +6,20 @@
 #define MAX_SUBJECTS 20 // Số lượng môn mà 1 kỳ sinh viên có thể học tối đa
 // Bảng danh sách môn học
 struct Subject{
-    char Subject_Id[10]; // Mã môn học
+    char Subject_Id[11]; // Mã môn học
     char Subject_Name[50]; // Tên môn học
     int Credits; // Số tín chỉ
 };
 typedef struct Subject Subject;
 // Điểm
 struct Grades{
-    char Subject_Id[10]; // Mã môn học
+    char Subject_Id[11]; // Mã môn học
     float Score; // Điểm gốc (0-10)
 };
 typedef struct Grades Grades;
 // Bảng học sinh
 struct Student{
-    char Student_Id[10]; // Mã sinh viên
+    char Student_Id[11]; // Mã sinh viên
     char Student_Name[50]; // Tên sinh viên
     struct tm Date; // Ngày sinh
     char Class[10]; // Lớp
