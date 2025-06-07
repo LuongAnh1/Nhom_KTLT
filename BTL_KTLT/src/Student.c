@@ -78,10 +78,10 @@ void Write_Student_Data(const char *filename) {
         Chaining *temp = Table_Students[i]; // Lay danh sach lien ket tai chi so bam
         while (temp != NULL) { // Duyet qua danh sach lien ket
             Student *student = (Student *)temp->Data; // Lay du lieu sinh vien
-            fprintf(f, "%s,%s,%d/%d/%d,%s,%d\n", 
+            fprintf(f, "%s,%s,%d/%d/%d,%s,%d,%s\n", 
                     student->Student_Id, student->Student_Name, 
                     student->Date.tm_mday, student->Date.tm_mon + 1, student->Date.tm_year + 1900,
-                    student->Class, student->Number_Of_Subjects); // Ghi du lieu vao tep
+                    student->Class, student->Number_Of_Subjects, student->Rank); // Ghi du lieu vao tep
             Write_Grades_Data("data/Subject.csv", student);
             temp = temp->Next; // Di chuyen den nut tiep theo
         }

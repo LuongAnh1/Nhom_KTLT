@@ -74,6 +74,11 @@ void Nhap_Diem(char* student_id,char* subject_id, float* score){
     // Nhập MSSV 
     printf("Nhap MSSV: ");
     fgets(student_id, 11, stdin);
+    if (student_id[strlen(student_id)-1] != '\n'){
+        printf("MSSV nhap vao khog hop le\n");
+        system("PAUSE");
+        return;
+    }
     student_id[strcspn(student_id, "\n")] = '\0';
     Chaining* chaining = Search_Student(student_id);
     
@@ -89,12 +94,25 @@ void Nhap_Diem(char* student_id,char* subject_id, float* score){
     printf("Nhap Ma Hoc Phan: ");
     fgets(subject_id, 11, stdin);
     subject_id[strcspn(subject_id, "\n")] = '\0';
-    Subject* subject = Search_Subject(subject_id)->Data;
-    if (subject == NULL)
+    Chaining* chaining1 = Search_Subject(subject_id);
+    if (chaining1 == NULL)
     {
         printf("Ma Hoc Phan khong ton tai.\n");
         system("PAUSE");
         return;
+    }
+
+    Subject* subject = chaining1->Data;
+
+    // Nhập điểm Kết Thúc Học Phần 
+    printf("Nhap diem Ket Thuc Hoc Phan (thang 10): ");
+    scanf("%f", score);
+    while (*score > 10 || *score < 0){
+        printf("Diem Ket Thuc Hoc Phan khong hop le, vui long nhap lai.\n");
+        printf("(Nhap -1 de thoat)\n");
+        printf("Nhap diem Ket Thuc Hoc Phan (thang 10): ");
+        scanf("%f", score);
+        if ((float)*score == -1.0) return;
     }
 
     // Kiểm tra xem sinh viên đã được nhập điểm môn này chưa 
@@ -112,17 +130,7 @@ void Nhap_Diem(char* student_id,char* subject_id, float* score){
         }
     }
 
-    // Nhập điểm Kết Thúc Học Phần 
-    printf("Nhap diem Ket Thuc Hoc Phan (thang 10): ");
-    scanf("%f", score);
-    while (*score > 10 || *score < 0){
-        printf("Diem Ket Thuc Hoc Phan khong hop le, vui long nhap lai.\n");
-        printf("(Nhap -1 de thoat)\n");
-        printf("Nhap diem Ket Thuc Hoc Phan (thang 10): ");
-        scanf("%f", score);
-        if ((float)*score == -1.0) return;
-    }
-
+    
     if (k == 0)
         student->Grades[i].Score = *score; // Ghi đè điểm sinh viên 
     else
@@ -142,6 +150,14 @@ void Tim_Sinh_Vien (char* student_id){
         // Nhập MSSV 
         printf("Nhap MSSV: ");
         fgets(student_id, 11, stdin);
+        if (student_id[strlen(student_id)-1] != '\n'){
+            printf("MSSV nhap vao khog hop le\n");
+            // Xoá phần dư
+            int ch;
+            while ((ch = getchar()) != '\n' && ch != EOF);
+            system("PAUSE");
+            return;
+        }
         student_id[strcspn(student_id, "\n")] = '\0';
         Chaining* chaining = Search_Student(student_id); 
         if (chaining == NULL)
@@ -164,9 +180,9 @@ void Tim_Sinh_Vien (char* student_id){
         printf("Ban co muon tiep tuc tim kiem sinh vien?\n");
         printf("(Nhap Y/y de xac nhan, ky tu bat ky de thoat)\n");
         printf("Lua chon: ");
-        getchar();
         char c;
         scanf("%c", &c);
+        getchar();
         if (c != 'Y' && c != 'y') return;
     }while(1);
 }
@@ -208,6 +224,14 @@ void Them_Sinh_Vien(char* student_id){
     // Nhập MSSV 
     printf("Nhap MSSV: ");
     fgets(student_id, 11, stdin);
+    if (student_id[strlen(student_id)-1] != '\n'){
+        printf("MSSV nhap vao khong hop le\n");
+        // Xoá phần dư
+        int ch;
+        while ((ch = getchar()) != '\n' && ch != EOF);
+        system("PAUSE");
+        return;
+    }
     student_id[strcspn(student_id, "\n")] = '\0';
     Chaining* chaining = Search_Student(student_id); 
     if (chaining != NULL)
@@ -223,22 +247,49 @@ void Them_Sinh_Vien(char* student_id){
         printf("Nhap Ho va Ten sinh vien: ");
         char name[300];
         fgets(name, sizeof(name), stdin);
+        if (name[strlen(name)-1] != '\n'){
+            printf("Do dai ten vua nhap vuot qua gioi han cho phep (300 ky tu)\n");
+            // Xoá phần dư
+            int ch;
+            while ((ch = getchar()) != '\n' && ch != EOF);
+            system("PAUSE");
+            return;
+        }
         name[strcspn(name, "\n")] = '\0';
         trim(name);
         strcpy(student->Student_Name,name);
 
         printf("Nhap ngay thang nam sinh (dd/mm/yyyy): ");
         if (scanf("%d/%d/%d", &student->Date.tm_mday, &student->Date.tm_mon, &student->Date.tm_year) != 3) {
-            printf("Lỗi: Định dạng không hợp lệ! Vui lòng nhập theo dd/mm/yyyy.\n");
+            printf("Loi: Dinh dang khong hop le! Vui long nhap theo dd/mm/yyyy.\n");
+            // Xoá phần dư
+            int ch;
+            while ((ch = getchar()) != '\n' && ch != EOF);
             system("PAUSE");
             return; // Kết thúc chương trình với mã lỗi
         }
         while (getchar() != '\n');
         student->Date.tm_mon = student->Date.tm_mon - 1;
         student->Date.tm_year = student->Date.tm_year - 1900;
+        // Lấy thời gian hiện tại
+        time_t now = time(NULL);
+        time_t t_user = mktime(&student->Date);
+        if(t_user > now){
+            printf("Ngay thang sinh khong hop le\n");
+            system("PAUSE");
+            return;
+        } 
 
         printf("Nhap Ma lop Sinh vien: ");
         fgets(student->Class, sizeof(student->Class), stdin);
+        if (student->Class[strlen(student->Class)-1] != '\n'){
+            printf("Ma lop khong hop le\n");
+            // Xoá phần dư
+            int ch;
+            while ((ch = getchar()) != '\n' && ch != EOF);
+            system("PAUSE");
+            return;
+        }
         student->Class[strcspn(student->Class, "\n")] = '\0';
 
         strcpy(student->Student_Id, student_id);
@@ -255,12 +306,20 @@ void Them_Sinh_Vien(char* student_id){
     system("PAUSE");
 }
 void Xoa_Sinh_Vien(char* student_id){
-        ClearScreen();
+    ClearScreen();
     printf("=========== XOA SINH VIEN ===========\n");
     
     // Nhập MSSV 
     printf("Nhap MSSV: ");
     fgets(student_id, 11, stdin);
+    if (student_id[strlen(student_id)-1] != '\n'){
+        printf("MSSV nhap vao khong hop le\n");
+        // Xoá phần dư
+        int ch;
+        while ((ch = getchar()) != '\n' && ch != EOF);
+        system("PAUSE");
+        return;
+    }
     student_id[strcspn(student_id, "\n")] = '\0';
     Chaining* chaining = Search_Student(student_id); 
     if (chaining == NULL)
