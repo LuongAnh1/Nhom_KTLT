@@ -93,6 +93,11 @@ void Nhap_Diem(char* student_id,char* subject_id, float* score){
     // Nhập Mã Học Phần
     printf("Nhap Ma Hoc Phan: ");
     fgets(subject_id, 11, stdin);
+    if (subject_id[strlen(subject_id)-1] != '\n'){
+        printf("Ma hoc phan nhap vao khog hop le\n");
+        system("PAUSE");
+        return;
+    }
     subject_id[strcspn(subject_id, "\n")] = '\0';
     Chaining* chaining1 = Search_Subject(subject_id);
     if (chaining1 == NULL)
@@ -248,7 +253,7 @@ void Them_Sinh_Vien(char* student_id){
         char name[300];
         fgets(name, sizeof(name), stdin);
         if (name[strlen(name)-1] != '\n'){
-            printf("Do dai ten vua nhap vuot qua gioi han cho phep (300 ky tu)\n");
+            printf("Do dai ten vua nhap vuot qua gioi han cho phep\n");
             // Xoá phần dư
             int ch;
             while ((ch = getchar()) != '\n' && ch != EOF);
